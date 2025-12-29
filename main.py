@@ -1,5 +1,5 @@
 import gradio as gr
-from project.src.utilis import chat_with_llm
+from project.src.utils import chat_with_llm
 
 # Gradio Interface using gr.Blocks for more control
 with gr.Blocks() as demo:
