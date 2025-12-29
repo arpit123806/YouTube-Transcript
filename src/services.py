@@ -21,6 +21,7 @@ AZURE_ENDPOINT=os.getenv("AZURE_ENDPOINT")
 AZURE_API_VERSION=os.getenv("AZURE_API_VERSION")
 AZURE_API_KEY=os.getenv("AZURE_API_KEY")
 AZURE_MODEL=os.getenv("AZURE_MODEL")
+AZURE_DEVELOPMENT=os.getenv("AZURE_DEVELOPMENT")
 
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
@@ -32,28 +33,26 @@ embeddings = AzureOpenAIEmbeddings(
 )
 
 llm = AzureChatOpenAI(
-    azure_endpoint="https://aes-gen-ai-internal.openai.azure.com",
-    api_version="2025-01-01-preview",
-    api_key="f3d09a596c054ff49a60664c34088afd",
-    azure_deployment="gpt-4o-mini",
+    azure_endpoint=AZURE_ENDPOINT,
+    api_version=AZURE_API_VERSION,
+    api_key=AZURE_API_KEY,
+    azure_deployment=AZURE_DEVELOPMENT,
     temperature=0.0
 )
 
+#Function to get transcript from youtube
 def get_transcript(video_id):
     try:
         transcript_list = YouTubeTranscriptApi().fetch(video_id)
         full_transcript = " ".join([item.text for item in transcript_list])
-        save_transcript_into_pinecone(full_transcript,video_id)
+        chunks = load_and_chunk_pdf(full_transcript,video_id)
+        save_to_pinecone(chunks,video_id)
         return True
     except Exception as e:
         print("Error is :",str(e))
         return False
     
-
-def save_transcript_into_pinecone(transcript_data,video_id):
-    chunks = load_and_chunk_pdf(transcript_data)
-    save_to_pinecone(chunks,video_id)
-
+#Function to chunk transcript
 def load_and_chunk_pdf(transcript_data, chunk_size=800, chunk_overlap=200):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
@@ -75,7 +74,6 @@ def save_to_pinecone(chunks,video_id):
             "page": i + 1,
             "timestamp":datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         }
-
         docs.append(chunk)
 
 
@@ -114,7 +112,7 @@ QA_CHAIN_PROMPT = PromptTemplate(
     template=template,
 )
 
-# Query Answering
+#Function to get response for user query
 def user_query_response(query,video_id,top_k=5):
     vectordb = PineconeVectorStore.from_existing_index(
         embedding=embeddings,
@@ -158,15 +156,5 @@ def user_query_response(query,video_id,top_k=5):
     return {
         "query": query,
         "result": clean_result,
-        "pages": list(set(doc.metadata['page'] for doc in source_docs)),
-        "sources": [
-                # {
-                #     "page": doc.metadata["page"],
-                #     "start_time": doc.metadata["start_time"],
-                #     "end_time": doc.metadata["end_time"]
-                # }
-                # for doc in source_docs
-            ]
+        "pages": list(set(doc.metadata['page'] for doc in source_docs))
     }
-
-    # https://www.youtube.com/watch?v=vJOGC8QJZJQ&t=47s
