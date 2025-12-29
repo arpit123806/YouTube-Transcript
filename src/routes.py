@@ -33,7 +33,7 @@ def lang_chain():
                 z=""
                 if len(query_response['pages'])>0 :
                     data['pages'] = query_response['pages']
-                    z=f"\n\nDerived from the page:{data["pages"]}"
+                    z=f"\n\nDerived from the page:{data['pages']}"
                 print(f'\nBot response is:{data["answer"]}{z}')
                 # return data
         return "Error occurred while ingesting the chunks into Pinecone."
