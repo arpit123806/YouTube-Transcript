@@ -1,0 +1,113 @@
+# -----------------------------
+# Python general
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual environment
+env/
+venv/
+.venv/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Package management
+# -----------------------------
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# -----------------------------
+# Environment & Secrets
+# -----------------------------
+.env
+.env.local
+.env.*.local
+*.key
+*.secret
+apikeys.json
+
+# -----------------------------
+# RAG Artifacts
+# -----------------------------
+
+# FAISS index files
+*.faiss
+*.index
+
+# Embedding cache / chunk dumps
+vector_store/
+embeddings/
+chunks/
+*.pkl
+*.pickle
+
+# Temporary transcript downloads
+transcripts/
+temp_transcript*.json
+downloaded_captions/*.json
+
+# YouTube data dumps
+yt_metadata.json
+*.ytinfo
+
+# Any local video/audio files you process
+*.mp4
+*.mp3
+*.wav
+
+# -----------------------------
+# App Specific (Gradio/Streamlit)
+# -----------------------------
+gradio_cached_examples/
+gradio_cache/
+gradio_static/
+gradio_env/
+
+streamlit_uploads/
+streamlit_cache/
+
+# -----------------------------
+# Logs
+# -----------------------------
+logs/
+*.log
+*.out
+*.err
+
+# -----------------------------
+# Model / Tokenizer files
+# -----------------------------
+models/
+*.bin
+*.ckpt
+*.pt
+
+# HuggingFace caching
+huggingface/
+~/.cache/huggingface/
+
+# -----------------------------
+# Jupyter / Notebook
+# -----------------------------
+.ipynb_checkpoints/
+
+# -----------------------------
+# Testing
+# -----------------------------
+.pytest_cache/
+.tox/
+coverage/
+.coverage
+coverage.xml
