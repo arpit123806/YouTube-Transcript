@@ -11,6 +11,18 @@
 ├──  |──.gitignore
 └──  |──README.md
 
+# .env variable
+MODEL = Vector database Pinecone Embedding Model
+PINECONE_API_KEY = Vector database Pinecone Api Key 
+INDEX_NAME = Vector database Pinecone Index Name
+ENVIRNOMENT = Vector database Pinecone Cloud Envirnoment
+PINECONE_DIMENSION Vector database Pinecone Dimensions
+AZURE_ENDPOINT = Azure Endpoint
+AZURE_API_VERSION = Azure Api version
+AZURE_API_KEY = Azure Api key
+AZURE_MODEL = Azure Model
+AZURE_DEVELOPMENT = Azure Development Model
+
 # Activate virtual environment
 cd project
 For windows .venv\Scripts\activate
