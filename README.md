@@ -47,7 +47,7 @@ For Linux source .venv/bin/activate
 └── Chunks stored in Pinecone
 └── LLM answer based only on retrieved chunks
 
-* Clean UI
+* Clean UI with Gradio
 └── Built with Gradio
 └── History panel
 └── Auto-clean input fields
